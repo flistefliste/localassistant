@@ -3,7 +3,7 @@ import bodyParser from "body-parser";
 import cors from "cors";
 import { spawn } from "child_process";
 
-import { ChatOllama } from "@langchain/ollama";
+import { Ollama, ChatOllama } from "@langchain/ollama";
 import { ChatPromptTemplate } from "@langchain/core/prompts";
 
 const app = express();
@@ -11,10 +11,21 @@ app.use(cors());
 app.use(bodyParser.json());
 
 const llm = new ChatOllama({
-  model: "llama3.1",
+//   model: "llama3.1",
+  model: "mistral",
   temperature: 0,
   maxRetries: 2,
 });
+
+
+const basePrompt = ChatPromptTemplate.fromMessages([
+  [
+    "system",
+    "You are a helpful assistant that give accurate and convivial answers.",
+  ],
+  ["human", "{input}"],
+]);
+
 
 const summarizationPrompt = ChatPromptTemplate.fromMessages([
   [
@@ -35,7 +46,7 @@ with the same identifier).
 
 Steps:
 
-    * Identify all entities in the text that are classified as persons, or personal information like phone numbers, emails or Identification number.
+    * Identify all entities in the text that are classified as persons, institutions, or places.
     * Assign a unique identifier to each entity.
     * Replace every occurrence of the full name and any partial name with the corresponding identifier in the text.
     * Print the processed text with all entities replaced by their respective identifiers. Do NOT print the original text but only the processed version.
@@ -43,8 +54,8 @@ Steps:
 
 Example:
 
-    Original text: "Micky Mouse is a character created by Walt Disney. His phone number is +1 312 3452 23"
-    Processed text: "ENTITY_1 is a character created by ENTITY_2. His phone number is ENTITY_3"
+    Original text: "Micky Mouse is a character created by Walt Disney."
+    Processed text: "ENTITY_1 is a character created by ENTITY_2."
     JSON output:
 
 [
@@ -52,15 +63,21 @@ Example:
   {{"entity": "Micky", "identifier": "ENTITY_1"}},
   {{"entity": "Walt Disney", "identifier": "ENTITY_2"}},
   {{"entity": "Walt", "identifier": "ENTITY_2"}}
-  {{"entity": "+1 312 3452 23", "identifier": "ENTITY_3"}}
 ]`,
   ],
   ["human", "{input}"],
 ]);
 
-app.post('/generate', (req, res) => {
+app.post('/generate', async (req, res) => {
 
     const prompt = req.body.prompt;
+     const chain = basePrompt.pipe(llm);
+    const response = await chain.invoke({
+        input: prompt,
+    });
+    console.log(response);
+     res.json( {response: response.content } );
+    /*
     const ollama = spawn('ollama', ['run', 'mistral']);
     let response = '';
     ollama.stdout.on('data', (data) => {
@@ -70,6 +87,7 @@ app.post('/generate', (req, res) => {
     ollama.on('close', () => {
         res.json({ response });
     });
+    */
     
 });
 
