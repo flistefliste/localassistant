@@ -44,7 +44,7 @@ Steps:
 Example:
 
     Original text: "Micky Mouse is a character created by Walt Disney. His phone number is +1 312 3452 23"
-    Processed text: "ENTITY_1 is a character created by ENTITY_2."
+    Processed text: "ENTITY_1 is a character created by ENTITY_2. His phone number is ENTITY_3"
     JSON output:
 
 [
