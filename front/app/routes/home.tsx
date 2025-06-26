@@ -7,8 +7,8 @@ import Anomymize from "~/anonymize/anonymize";
 
 export function meta({}: Route.MetaArgs) {
   return [
-    { title: "New React Router App" },
-    { name: "description", content: "Welcome to React Router!" },
+    { title: "inAzerty Local AI assistant tools" },
+    { name: "description", content: "Welcome to inAzerty new AI amazing project" },
   ];
 }
 
