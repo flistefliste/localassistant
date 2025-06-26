@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "Local LLMs assistant",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "test": "test",
     "start": "node src/index.js"
@@ -26,6 +27,8 @@
   },
   "homepage": "https://github.com/flistefliste/localassistant#readme",
   "dependencies": {
+    "@langchain/core": "^0.3.61",
+    "@langchain/ollama": "^0.2.3",
     "@mistralai/mistralai": "^1.7.2",
     "body-parser": "^2.2.0",
     "cors": "^2.8.5",
