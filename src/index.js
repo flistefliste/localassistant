@@ -75,7 +75,11 @@ Example:
   ["human", "{input}"],
 ]);
 
-app.post('/generate', async (req, res) => {
+app.get('/', (req, res) => {
+    res.send('Hello World!')
+});
+
+app.post('/api/generate', async (req, res) => {
 
     const prompt = req.body.prompt;
      const chain = basePrompt.pipe(llm);
@@ -99,7 +103,7 @@ app.post('/generate', async (req, res) => {
 });
 
 
-app.post('/summarize', async (req, res) => {
+app.post('/api/summarize', async (req, res) => {
 
     const prompt = req.body.prompt;
     const chain = summarizationPrompt.pipe(llm);
@@ -111,7 +115,7 @@ app.post('/summarize', async (req, res) => {
     
 });
 
-app.post('/anonymize', async (req, res) => {
+app.post('/api/anonymize', async (req, res) => {
 
     const prompt = req.body.prompt;
     const chain = anonymizationPrompt.pipe(llm);

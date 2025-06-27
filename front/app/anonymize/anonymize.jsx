@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import Loader from '../components/loader';
+import {apiUrl} from './../config';
 
 function Anonymize() {
 const [prompt, setPrompt] = useState('');
@@ -10,7 +11,7 @@ const [response, setResponse] = useState('');
   const handleSubmit = async () => {
      setLoading(true);
      setPrompt('');
-    const res = await axios.post('http://localhost:3001/anonymize', { prompt });
+    const res = await axios.post(`${apiUrl}anonymize`, { prompt });
    
     setResponse(res.data.response);
     setMessages([...messages, {

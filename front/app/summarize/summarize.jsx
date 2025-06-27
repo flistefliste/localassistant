@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import Loader from './../components/loader';
+import {apiUrl} from './../config';
 
 function Summarize() {
 const [prompt, setPrompt] = useState('');
@@ -10,7 +11,7 @@ const [response, setResponse] = useState('');
   const handleSubmit = async () => {
      setLoading(true);
      setPrompt('');
-    const res = await axios.post('http://localhost:3001/summarize', { prompt });
+    const res = await axios.post(`${apiUrl}summarize`, { prompt });
    
     setResponse(res.data.response);
     setMessages([...messages, {
