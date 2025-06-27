@@ -1,5 +1,6 @@
 import express from "express";
 import bodyParser from "body-parser";
+// import basicAuth from "express-basic-auth";
 import cors from "cors";
 import { spawn } from "child_process";
 
@@ -9,10 +10,16 @@ import { ChatPromptTemplate } from "@langchain/core/prompts";
 const app = express();
 app.use(cors());
 app.use(bodyParser.json());
+// app.use(basicAuth({
+//     users: {
+//         'vince': 'oeyfgOF9pqef)Uealv',
+//         'antoine': 'GFAZ§fzddqeldh',
+//     }
+// }))
 
 const llm = new ChatOllama({
-//   model: "llama3.1",
-  model: "mistral",
+  model: "llama3.1",
+  // model: "mistral",
   temperature: 0,
   maxRetries: 2,
 });
@@ -21,7 +28,7 @@ const llm = new ChatOllama({
 const basePrompt = ChatPromptTemplate.fromMessages([
   [
     "system",
-    "You are a helpful assistant that give accurate and convivial answers.",
+    "You are a helpful assistant that gives accurate and convivial answers in FRENCH.",
   ],
   ["human", "{input}"],
 ]);
@@ -30,7 +37,7 @@ const basePrompt = ChatPromptTemplate.fromMessages([
 const summarizationPrompt = ChatPromptTemplate.fromMessages([
   [
     "system",
-    "You are a helpful assistant that summarize {input} in about 5-10 lines. DO NOT answer the question, just summarize.",
+    "You are a helpful assistant that summarize {input} in about 5-10 lines in FRENCH. DO NOT answer the question, just summarize.",
   ],
   ["human", "{input}"],
 ]);
@@ -42,7 +49,7 @@ const anonymizationPrompt = ChatPromptTemplate.fromMessages([
 persons, institutions, or places with a unique identifier throughout the 
 entire text. This includes replacing both the full entity name and any 
 partial occurrences of the name (e.g., replacing "Micky Mouse" and "Micky" 
-with the same identifier).
+with the same identifier). The answer should be in FRENCH.
 
 Steps:
 

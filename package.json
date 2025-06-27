@@ -32,6 +32,7 @@
     "@mistralai/mistralai": "^1.7.2",
     "body-parser": "^2.2.0",
     "cors": "^2.8.5",
-    "express": "^5.1.0"
+    "express": "^5.1.0",
+    "express-basic-auth": "^1.2.1"
   }
 }
