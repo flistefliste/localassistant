@@ -24,7 +24,12 @@ $ npm run start
 
 ## Start the frontend
 ```
-$ npm run dev
+$ cd front && npm run dev
 # or
-$ npm run start
+$ cd front && npm run start
+```
+
+## Browse app locally
+```
+http://localhost:5173/
 ```
