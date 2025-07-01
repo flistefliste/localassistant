@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import Loader from '../components/loader';
+import Alert from './../components/alert';
 import {apiUrl} from './../config';
 
 function Anonymize() {
@@ -8,19 +9,26 @@ const [prompt, setPrompt] = useState('');
 const [loading, setLoading] = useState(false);
 const [messages, setMessages] = useState([]);
 const [response, setResponse] = useState('');
+const [error, setError] = useState(false);
   const handleSubmit = async () => {
-     setLoading(true);
-     setPrompt('');
-    const res = await axios.post(`${apiUrl}anonymize`, { prompt });
-   
-    setResponse(res.data.response);
-    setMessages([...messages, {
-      user: prompt,
-      ai: res.data.response,
-    }]?.reverse())
-    setLoading(false);
+    setLoading(true);
+    setPrompt('');
+    try{
+      const res = await axios.post(`${apiUrl}anonymize`, { prompt });
+    
+      setResponse(res.data.response);
+      setMessages([...messages, {
+        user: prompt,
+        ai: res.data.response,
+      }]?.reverse())
+      setLoading(false);
 
-    console.log(messages);
+      console.log(messages);
+
+    }
+     catch(error){
+      setError(error?.message);
+     }
   };
   return (
    
@@ -34,6 +42,7 @@ const [response, setResponse] = useState('');
           onChange={(e) => setPrompt(e.target.value)}
           placeholder="Text to anomymize..."
         />
+         {error && <Alert type={`error`} message={error}/>}
         <button 
           disabled={loading} 
           onClick={handleSubmit} 
