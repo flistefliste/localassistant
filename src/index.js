@@ -12,8 +12,6 @@ app.use(cors());
 app.use(bodyParser.json());
 // app.use(basicAuth({
 //     users: {
-//         'vince': 'oeyfgOF9pqef)Uealv',
-//         'antoine': 'GFAZ§fzddqeldh',
 //     }
 // }))
 
